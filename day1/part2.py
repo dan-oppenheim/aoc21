@@ -12,12 +12,7 @@
 
 with open('part2_input.txt') as input_file:
     # pre-populate to avoid logic in the loop
-    window = [
-        int(input_file.readline()),
-        int(input_file.readline()),
-        int(input_file.readline()),
-        int(input_file.readline())
-    ]
+    window = [int(next(input_file)) for x in range(4)]
 
     increase_count = 1 if sum(window[1:]) > sum(window[0:3]) else 0
 
