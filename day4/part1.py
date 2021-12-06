@@ -60,7 +60,6 @@ def day1(draw_stream, boards):
     for num in draw_stream:
         completed_boards = check_boards(num, boards)
         if len(completed_boards) > 0:
-            print(completed_boards[0])
             print(f"Day one result is: {completed_boards[0].sum_unmarked() * num}")
             break
 
