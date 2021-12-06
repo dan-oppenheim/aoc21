@@ -6,10 +6,9 @@ def generate_day_counts(input_list):
     return day_counts
 
 def calculate_next_day_counts(current_counts):
-    new_counts = current_counts[1:] # count down
-    new_counts.append(current_counts[0]) # new fish
-    new_counts[6] += current_counts[0] # looped fish
-    
+    new_counts = current_counts[1:] # move all fish down a day
+    new_counts.append(current_counts[0]) # add new fish
+    new_counts[6] += current_counts[0] # move fish at day zero to day 6
     return new_counts
 
 def run_simulation(day_counts, num_days):
