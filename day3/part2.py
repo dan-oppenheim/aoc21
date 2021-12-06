@@ -19,7 +19,8 @@ def calculate_rating(binary_strings, num_bits, keep_test):
     for i in range(num_bits):
         bit_count = calculate_bit_occurrences(binary_strings, i)
         binary_strings = [
-            bs for bs in binary_strings if keep_test(bit_count, bs[i], len(binary_strings))
+            bs for bs in binary_strings 
+                if keep_test(bit_count, bs[i], len(binary_strings))
         ]
         if len(binary_strings) == 1:
             break
