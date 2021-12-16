@@ -15,6 +15,15 @@ class Map:
     def _from_index(self, index):
         return index % self.width, index // self.width
 
+    def __str__(self):
+        s = ""
+        for y in range(self.width):
+            for x in range(self.height):
+                i = self._to_index(x, y)
+                s += str(self.grid[i])
+            s += '\n'
+        return s
+
     def reconstruct_path(self, came_from, current):
         path = [current]
         while current in came_from:
@@ -61,27 +70,42 @@ class Map:
                             open_set.append(neighbour_index)
                             open_set.sort(key=lambda i: f_score[i], reverse=True)
         return []
-
+    
     def extend_cavern(self):
-        new_grid = [0] * self.width * self.height * 25
+        new_grid = [0] * self.width * 5  * self.height * 5
+        for i in range(self.width * self.height):
+            val = self.grid[i]
+            x, y = self._from_index(i)
+
+            for yc in range(0,5):
+                for xc in range(0,5):
+                    nx = xc * self.width + x
+                    ny = yc * self.height + y
+
+                    ni = ny * (self.width * 5) + nx
+                    new_val = val + yc + xc
+                    if new_val > 9:
+                        new_val -= 9
+                    new_grid[ni] = new_val
         
-
-
+        self.width = self.width * 5
+        self.height = self.height * 5
+        self.grid = new_grid
 
 def h_simple(map, start, end):
     sx, sy = map._from_index(start)
     ex, ey = map._from_index(end)
     return (ex-sx) + (ey-sy)
 
-
 def main():
-    with open('test_input.txt') as input_file:
+    with open('input.txt') as input_file:
         lines = input_file.readlines()
         cavern = Map(lines)
-
         path = cavern.get_path(0, (cavern.width*cavern.height)-1, h_simple)
-        print(path)
         print(cavern.get_total_path_cost(path))
         
-
+        cavern.extend_cavern()
+        path = cavern.get_path(0, (cavern.width*cavern.height)-1, h_simple)
+        print(cavern.get_total_path_cost(path))
+        
 main()
